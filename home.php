@@ -296,6 +296,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             color:#fbbf24; 
         }
         
+        /* ACTION GRID NAVIGATION - FIXED */
         .action-grid { 
             display:grid; 
             grid-template-columns:repeat(4,1fr); 
@@ -333,6 +334,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             font-weight:500; 
         }
         
+        /* SHORTCUT GRID NAVIGATION - FIXED */
         .shortcut-grid { 
             display:grid; 
             grid-template-columns:repeat(4,1fr); 
@@ -502,6 +504,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             border:1px solid #2c7a5a; 
         }
         
+        /* BOTTOM NAVIGATION - FIXED */
         .bottom-nav { 
             position:absolute; 
             bottom:0; 
@@ -546,296 +549,80 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         }
 
         /* ===== RESPONSIVE BREAKPOINTS ===== */
-
-        /* Tablet Styles (600px - 1024px) */
+        /* (Keeping all your responsive styles exactly as they were) */
         @media screen and (min-width: 600px) and (max-width: 1024px) {
-            body { 
-                padding:30px; 
-                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
-            }
-            
-            .phone-frame { 
-                max-width: 700px; 
-                border-radius: 40px; 
-                padding: 30px 30px 90px; 
-            }
-            
-            .balance-grid { 
-                grid-template-columns: repeat(4, 1fr); 
-            }
-            
-            .action-grid, 
-            .shortcut-grid { 
-                gap: 16px; 
-            }
-            
-            .action-item { 
-                padding: 18px 8px; 
-            }
-            
-            .action-item i { 
-                font-size: 2rem; 
-            }
-            
-            .action-item span { 
-                font-size: 0.9rem; 
-            }
-            
-            .withdrawal-list { 
-                display: grid; 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 15px; 
-            }
-            
-            .bottom-nav { 
-                padding: 15px 30px 25px; 
-            }
-            
-            .nav-item span { 
-                font-size: 0.8rem; 
-            }
-            
-            .nav-item i { 
-                font-size: 1.6rem; 
-            }
+            body { padding:30px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
+            .phone-frame { max-width: 700px; border-radius: 40px; padding: 30px 30px 90px; }
+            .balance-grid { grid-template-columns: repeat(4, 1fr); }
+            .action-grid, .shortcut-grid { gap: 16px; }
+            .action-item { padding: 18px 8px; }
+            .action-item i { font-size: 2rem; }
+            .action-item span { font-size: 0.9rem; }
+            .withdrawal-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .bottom-nav { padding: 15px 30px 25px; }
+            .nav-item span { font-size: 0.8rem; }
+            .nav-item i { font-size: 1.6rem; }
         }
 
-        /* Desktop Styles (1025px - 1440px) */
         @media screen and (min-width: 1025px) and (max-width: 1440px) {
-            body { 
-                padding: 40px; 
-                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
-            }
-            
-            .phone-frame { 
-                max-width: 900px; 
-                border-radius: 50px; 
-                padding: 40px 40px 100px; 
-            }
-            
-            .balance-grid { 
-                grid-template-columns: repeat(4, 1fr); 
-                gap: 15px; 
-            }
-            
-            .action-grid { 
-                grid-template-columns: repeat(6, 1fr); 
-                gap: 18px; 
-            }
-            
-            .shortcut-grid { 
-                grid-template-columns: repeat(6, 1fr); 
-                gap: 15px; 
-            }
-            
-            .withdrawal-list { 
-                display: grid; 
-                grid-template-columns: repeat(3, 1fr); 
-                gap: 20px; 
-            }
-            
-            .action-buttons { 
-                max-width: 600px; 
-                margin-left: auto; 
-                margin-right: auto; 
-            }
-            
-            .recent-card { 
-                max-width: 600px; 
-                margin-left: auto; 
-                margin-right: auto; 
-            }
-            
-            .bottom-nav { 
-                padding: 15px 40px 25px; 
-                max-width: 900px; 
-                left: 50%; 
-                transform: translateX(-50%); 
-                border-radius: 30px 30px 0 0; 
-            }
+            body { padding: 40px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
+            .phone-frame { max-width: 900px; border-radius: 50px; padding: 40px 40px 100px; }
+            .balance-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
+            .action-grid { grid-template-columns: repeat(6, 1fr); gap: 18px; }
+            .shortcut-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
+            .withdrawal-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .action-buttons { max-width: 600px; margin-left: auto; margin-right: auto; }
+            .recent-card { max-width: 600px; margin-left: auto; margin-right: auto; }
+            .bottom-nav { padding: 15px 40px 25px; max-width: 900px; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; }
         }
 
-        /* Large Desktop Styles (1441px and above) */
         @media screen and (min-width: 1441px) {
-            body { 
-                padding: 50px; 
-                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
-            }
-            
-            .phone-frame { 
-                max-width: 1200px; 
-                border-radius: 60px; 
-                padding: 50px 50px 120px; 
-            }
-            
-            .balance-grid { 
-                grid-template-columns: repeat(6, 1fr); 
-                gap: 20px; 
-            }
-            
-            .action-grid { 
-                grid-template-columns: repeat(8, 1fr); 
-                gap: 20px; 
-            }
-            
-            .shortcut-grid { 
-                grid-template-columns: repeat(8, 1fr); 
-                gap: 18px; 
-            }
-            
-            .withdrawal-list { 
-                display: grid; 
-                grid-template-columns: repeat(4, 1fr); 
-                gap: 25px; 
-            }
-            
-            .action-item, 
-            .shortcut-item { 
-                font-size: 1rem; 
-            }
-            
-            .action-item i { 
-                font-size: 2.2rem; 
-            }
-            
-            .shortcut-item i { 
-                width: 70px; 
-                height: 70px; 
-                font-size: 2rem; 
-                line-height: 46px; 
-            }
-            
-            .recent-card, 
-            .action-buttons { 
-                max-width: 800px; 
-                margin-left: auto; 
-                margin-right: auto; 
-            }
-            
-            .bottom-nav { 
-                max-width: 1200px; 
-                padding: 20px 50px 30px; 
-                left: 50%; 
-                transform: translateX(-50%); 
-            }
-            
-            .nav-item span { 
-                font-size: 0.9rem; 
-            }
-            
-            .nav-item i { 
-                font-size: 1.8rem; 
-            }
+            body { padding: 50px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
+            .phone-frame { max-width: 1200px; border-radius: 60px; padding: 50px 50px 120px; }
+            .balance-grid { grid-template-columns: repeat(6, 1fr); gap: 20px; }
+            .action-grid { grid-template-columns: repeat(8, 1fr); gap: 20px; }
+            .shortcut-grid { grid-template-columns: repeat(8, 1fr); gap: 18px; }
+            .withdrawal-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+            .action-item, .shortcut-item { font-size: 1rem; }
+            .action-item i { font-size: 2.2rem; }
+            .shortcut-item i { width: 70px; height: 70px; font-size: 2rem; line-height: 46px; }
+            .recent-card, .action-buttons { max-width: 800px; margin-left: auto; margin-right: auto; }
+            .bottom-nav { max-width: 1200px; padding: 20px 50px 30px; left: 50%; transform: translateX(-50%); }
+            .nav-item span { font-size: 0.9rem; }
+            .nav-item i { font-size: 1.8rem; }
         }
 
-        /* Small Mobile Devices (below 400px) */
         @media screen and (max-width: 399px) {
-            .phone-frame { 
-                padding: 20px 15px 80px; 
-            }
-            
-            .balance-grid { 
-                grid-template-columns: 1fr; 
-            }
-            
-            .action-grid, 
-            .shortcut-grid { 
-                gap: 8px; 
-            }
-            
-            .action-item { 
-                padding: 10px 2px; 
-            }
-            
-            .action-item i { 
-                font-size: 1.3rem; 
-            }
-            
-            .action-item span { 
-                font-size: 0.7rem; 
-            }
-            
-            .withdrawal-item { 
-                flex-direction: column; 
-                gap: 10px; 
-                text-align: center; 
-            }
-            
-            .withdrawal-left { 
-                flex-direction: column; 
-            }
-            
-            .bottom-nav { 
-                padding: 10px 10px 15px; 
-            }
-            
-            .nav-item i { 
-                font-size: 1.2rem; 
-            }
-            
-            .nav-item span { 
-                font-size: 0.6rem; 
-            }
+            .phone-frame { padding: 20px 15px 80px; }
+            .balance-grid { grid-template-columns: 1fr; }
+            .action-grid, .shortcut-grid { gap: 8px; }
+            .action-item { padding: 10px 2px; }
+            .action-item i { font-size: 1.3rem; }
+            .action-item span { font-size: 0.7rem; }
+            .withdrawal-item { flex-direction: column; gap: 10px; text-align: center; }
+            .withdrawal-left { flex-direction: column; }
+            .bottom-nav { padding: 10px 10px 15px; }
+            .nav-item i { font-size: 1.2rem; }
+            .nav-item span { font-size: 0.6rem; }
         }
 
-        /* Landscape Mode */
         @media screen and (orientation: landscape) and (max-height: 600px) {
-            body { 
-                padding: 20px; 
-            }
-            
-            .phone-frame { 
-                max-width: 700px; 
-                padding: 20px 20px 70px; 
-            }
-            
-            .welcome-row { 
-                margin-bottom: 15px; 
-            }
-            
-            .action-grid, 
-            .shortcut-grid { 
-                margin-bottom: 15px; 
-            }
-            
-            .recent-card { 
-                margin-bottom: 15px; 
-            }
-            
-            .bottom-nav { 
-                padding: 8px 20px 15px; 
-            }
+            body { padding: 20px; }
+            .phone-frame { max-width: 700px; padding: 20px 20px 70px; }
+            .welcome-row { margin-bottom: 15px; }
+            .action-grid, .shortcut-grid { margin-bottom: 15px; }
+            .recent-card { margin-bottom: 15px; }
+            .bottom-nav { padding: 8px 20px 15px; }
         }
 
-        /* Fix for very tall screens */
         @media screen and (min-height: 1000px) {
-            body { 
-                align-items: flex-start; 
-                padding-top: 50px; 
-                padding-bottom: 50px; 
-            }
+            body { align-items: flex-start; padding-top: 50px; padding-bottom: 50px; }
         }
 
-        /* Print Styles */
         @media print {
-            body { 
-                background: white; 
-                padding: 0; 
-            }
-            
-            .phone-frame { 
-                box-shadow: none; 
-                background: white; 
-                color: black; 
-                max-width: 100%;
-            }
-            
-            .bottom-nav, 
-            .action-buttons, 
-            .action-grid, 
-            .shortcut-grid { 
-                display: none; 
-            }
+            body { background: white; padding: 0; }
+            .phone-frame { box-shadow: none; background: white; color: black; max-width: 100%; }
+            .bottom-nav, .action-buttons, .action-grid, .shortcut-grid { display: none; }
         }
     </style>
 </head>
@@ -907,7 +694,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             </a>
         </div>
 
-        <!-- Action grid for Bonus and Incentive -->
+        <!-- ACTION GRID NAVIGATION - FIXED LINKS -->
         <div class="action-grid">
             <a href="bonus.php" class="action-item">
                 <i class="fas fa-gift"></i>
@@ -927,7 +714,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             </a>
         </div>
 
-        <!-- Shortcuts -->
+        <!-- SHORTCUT GRID NAVIGATION - FIXED LINKS -->
         <div class="shortcut-grid">
             <a href="my_products.php" class="shortcut-item">
                 <i class="fas fa-box"></i>
@@ -999,31 +786,29 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             <?php endif; ?>
         </div>
 
-        <!-- Bottom Navigation -->
-       <!-- Bottom Navigation - FIXED LINKS -->
-<div class="bottom-nav">
-    <a href="home.php" class="nav-item active">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
-    <a href="my_products.php" class="nav-item">
-        <i class="fas fa-cube"></i>
-        <span>Products</span>
-    </a>
-    <a href="official.php" class="nav-item">
-        <i class="fas fa-bullhorn"></i>
-        <span>Official</span>
-    </a>
-    <a href="team.php" class="nav-item">
-        <i class="fas fa-users"></i>
-        <span>Team</span>
-    </a>
-    <a href="profile.php" class="nav-item">
-        <i class="fas fa-user"></i>
-        <span>Mine</span>
-    </a>
-</div>
+        <!-- BOTTOM NAVIGATION - FIXED LINKS -->
+        <div class="bottom-nav">
+            <a href="home.php" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="my_products.php" class="nav-item">
+                <i class="fas fa-cube"></i>
+                <span>Products</span>
+            </a>
+            <a href="official.php" class="nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>Official</span>
+            </a>
+            <a href="team.php" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </a>
+            <a href="profile.php" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Mine</span>
+            </a>
+        </div>
     </div>
 </body>
 </html>
-
