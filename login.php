@@ -1,5 +1,6 @@
 <?php
-// Start session at the VERY TOP - BEFORE anything else
+// Force session save path for Render
+ini_set('session.save_path', '/tmp');
 session_start();
 
 require_once 'config/database.php';
@@ -28,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
+            
+            // FORCE session to save before redirect - CRITICAL FIX
+            session_write_close();
             
             // Redirect to homepage
             header("Location: home.php");
@@ -168,6 +172,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
-
-
-
