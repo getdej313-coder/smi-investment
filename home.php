@@ -1000,28 +1000,30 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         </div>
 
         <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <a href="home.php" class="nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="product.php" class="nav-item">
-                <i class="fas fa-cube"></i>
-                <span>Product</span>
-            </a>
-            <a href="official.php" class="nav-item">
-                <i class="fas fa-bullhorn"></i>
-                <span>Official</span>
-            </a>
-            <a href="team.php" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Team</span>
-            </a>
-            <a href="profile.php" class="nav-item">
-                <i class="fas fa-user"></i>
-                <span>Mine</span>
-            </a>
-        </div>
+       <!-- Bottom Navigation - FIXED LINKS -->
+<div class="bottom-nav">
+    <a href="home.php" class="nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="my_products.php" class="nav-item">
+        <i class="fas fa-cube"></i>
+        <span>Products</span>
+    </a>
+    <a href="official.php" class="nav-item">
+        <i class="fas fa-bullhorn"></i>
+        <span>Official</span>
+    </a>
+    <a href="team.php" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Team</span>
+    </a>
+    <a href="profile.php" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Mine</span>
+    </a>
+</div>
     </div>
 </body>
 </html>
+
