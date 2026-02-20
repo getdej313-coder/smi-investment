@@ -16,15 +16,8 @@ $user_id = $_SESSION['user_id'];
 // Get user data
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
-$user = $stmt->fetch();
-
-// rest of your code continues exactly as is...
-
-
-
-
-
-
+$user = $stmt->fetch();            
+?>
 <?php
 require_once 'includes/auth.php'; // redirects to login if not logged in
 $user_id = $_SESSION['user_id'];
@@ -1034,4 +1027,5 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
     </div>
 </body>
 </html>
+
 
