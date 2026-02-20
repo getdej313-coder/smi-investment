@@ -437,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label><i class="fas fa-lock"></i> Password</label>
                 <div class="input-wrapper">
                     <i class="fas fa-key" style="color:#d4a017;"></i>
-                    <input type="password" name="password" placeholder="Minimum 6 characters" required>
+                    <input type="password" name="password" placeholder="Enter Your Password" required>
                 </div>
             </div>
             
@@ -445,7 +445,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label><i class="fas fa-check-circle"></i> Confirm Password</label>
                 <div class="input-wrapper">
                     <i class="fas fa-check-double" style="color:#d4a017;"></i>
-                    <input type="password" name="confirm_password" placeholder="··········" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm Your Password" required>
                 </div>
             </div>
             
@@ -567,4 +567,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
+
 
