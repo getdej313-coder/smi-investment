@@ -411,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="input-group">
                 <label><i class="fas fa-envelope"></i> Email</label>
                 <div class="input-wrapper">
-                    <input type="email" name="email" placeholder="john@example.com" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                    <input type="email" name="email" placeholder="john@gmail.com" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
                 </div>
             </div>
             
@@ -567,3 +567,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
+
