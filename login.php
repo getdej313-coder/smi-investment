@@ -7,7 +7,7 @@ require_once 'includes/functions.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
-    redirect('homepage.php');
+    redirect('home.php');
     exit();
 }
 
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['balance'] = $user['balance'];
             
             // Redirect to homepage
-            header("Location: homepage.php");
+            header("Location: home.php");
             exit();
         } else {
             $error = "Invalid phone or password";
@@ -168,4 +168,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+
 
