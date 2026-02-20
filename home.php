@@ -1,4 +1,31 @@
 <?php
+// Start session and check login at the VERY TOP
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if user is logged in - if not, redirect to login
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+require_once 'includes/auth.php'; // redirects to login if not logged in
+$user_id = $_SESSION['user_id'];
+
+// Get user data
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch();
+
+// rest of your code continues exactly as is...
+
+
+
+
+
+
+<?php
 require_once 'includes/auth.php'; // redirects to login if not logged in
 $user_id = $_SESSION['user_id'];
 
@@ -1007,3 +1034,4 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
     </div>
 </body>
 </html>
+
