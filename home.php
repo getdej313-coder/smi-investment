@@ -1,22 +1,32 @@
 <?php
-// Start session and check login at the VERY TOP
+// Start session at the VERY TOP
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check if user is logged in - if not, redirect to login
+// Include database and functions
+require_once 'config/database.php';
+require_once 'includes/functions.php';
+
+// NOW check if user is logged in
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
 // Get user data
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
+
+// If user not found in database, logout
+if (!$user) {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
 
 // Get investment earnings (total earned from investments)
 $investment_earnings = $pdo->prepare("SELECT COALESCE(SUM(amount), 0) as total FROM daily_earnings WHERE user_id = ? AND status = 'paid'");
@@ -28,11 +38,8 @@ $referral_earnings = $pdo->prepare("SELECT COALESCE(SUM(amount), 0) as total FRO
 $referral_earnings->execute([$user_id]);
 $referral_total = $referral_earnings->fetch()['total'];
 
-// Get bonus earnings (if you have a bonuses table)
-// $bonus_earnings = $pdo->prepare("SELECT COALESCE(SUM(amount), 0) as total FROM bonuses WHERE user_id = ?");
-// $bonus_earnings->execute([$user_id]);
-// $bonus_total = $bonus_earnings->fetch()['total'];
-$bonus_total = 0; // Placeholder until bonuses table is created
+// Get bonus earnings
+$bonus_total = 0;
 
 // Calculate total earnings
 $total_earnings = $investment_total + $referral_total + $bonus_total;
