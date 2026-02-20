@@ -10,16 +10,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     exit();
 }
 
-require_once 'includes/auth.php'; // redirects to login if not logged in
-$user_id = $_SESSION['user_id'];
-
-// Get user data
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
-$user = $stmt->fetch();            
-?>
-<?php
-require_once 'includes/auth.php'; // redirects to login if not logged in
+require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
 // Get user data
@@ -1027,5 +1018,3 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
     </div>
 </body>
 </html>
-
-
