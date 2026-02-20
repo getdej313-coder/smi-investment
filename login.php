@@ -48,8 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Smi Investment - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Your Original Styles - Keep Everything */
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
         body { background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
         .card { background: rgba(255,255,255,0.95); max-width:480px; width:100%; border-radius:2.5rem; padding:2.5rem 2rem; box-shadow:0 30px 60px rgba(0,0,0,0.3); position: relative; }
@@ -110,6 +112,338 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             100% { inset: 0; transform: rotate(90deg); }
         }
         .loader-text { color: #1e4b5e; font-weight: 600; font-size: 1.1rem; }
+
+        /* ===== RESPONSIVE STYLES ADDED - NO ORIGINAL CONTENT CHANGED ===== */
+
+        /* Tablet Styles (600px - 1024px) */
+        @media screen and (min-width: 600px) and (max-width: 1024px) {
+            body { 
+                padding: 2rem; 
+                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
+            }
+            
+            .card { 
+                max-width: 600px; 
+                padding: 3rem; 
+                border-radius: 3rem; 
+            }
+            
+            .brand h1 { 
+                font-size: 2.8rem; 
+            }
+            
+            .brand h1 i { 
+                font-size: 2.5rem; 
+                padding: 12px; 
+            }
+            
+            .input-group label { 
+                font-size: 1.1rem; 
+            }
+            
+            .input-wrapper { 
+                border-radius: 30px; 
+            }
+            
+            .input-wrapper input { 
+                padding: 20px 0; 
+                font-size: 1.1rem; 
+            }
+            
+            .phone-prefix { 
+                padding: 10px 20px; 
+                font-size: 1rem; 
+            }
+            
+            .login-btn { 
+                padding: 20px; 
+                font-size: 1.4rem; 
+                border-radius: 50px; 
+            }
+            
+            .register-link { 
+                font-size: 1.1rem; 
+            }
+            
+            .loader { 
+                width: 60px; 
+                height: 60px; 
+            }
+            
+            .loader-text { 
+                font-size: 1.3rem; 
+            }
+        }
+
+        /* Desktop Styles (1025px - 1440px) */
+        @media screen and (min-width: 1025px) and (max-width: 1440px) {
+            body { 
+                padding: 2.5rem; 
+                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
+            }
+            
+            .card { 
+                max-width: 500px; 
+                padding: 3rem 2.5rem; 
+            }
+            
+            .brand h1 { 
+                font-size: 2.5rem; 
+            }
+            
+            .brand h1 i { 
+                font-size: 2.2rem; 
+            }
+            
+            .login-btn { 
+                font-size: 1.3rem; 
+                padding: 18px; 
+            }
+        }
+
+        /* Large Desktop Styles (1441px and above) */
+        @media screen and (min-width: 1441px) {
+            body { 
+                padding: 3rem; 
+                background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%);
+            }
+            
+            .card { 
+                max-width: 600px; 
+                padding: 3.5rem; 
+                border-radius: 3.5rem; 
+            }
+            
+            .brand h1 { 
+                font-size: 3rem; 
+                gap: 15px; 
+            }
+            
+            .brand h1 i { 
+                font-size: 2.8rem; 
+                padding: 15px; 
+            }
+            
+            .input-group { 
+                margin-bottom: 2rem; 
+            }
+            
+            .input-group label { 
+                font-size: 1.2rem; 
+                margin-bottom: 10px; 
+            }
+            
+            .input-wrapper input { 
+                padding: 20px 0; 
+                font-size: 1.2rem; 
+            }
+            
+            .phone-prefix { 
+                padding: 12px 24px; 
+                font-size: 1.1rem; 
+            }
+            
+            .login-btn { 
+                padding: 22px; 
+                font-size: 1.5rem; 
+                margin-top: 30px; 
+            }
+            
+            .register-link { 
+                font-size: 1.2rem; 
+                margin-top: 2.5rem; 
+            }
+            
+            .error { 
+                padding: 15px; 
+                font-size: 1.1rem; 
+            }
+            
+            .loader { 
+                width: 70px; 
+                height: 70px; 
+            }
+            
+            .loader-text { 
+                font-size: 1.4rem; 
+            }
+        }
+
+        /* Small Mobile Devices (below 400px) */
+        @media screen and (max-width: 399px) {
+            body { 
+                padding: 1rem; 
+            }
+            
+            .card { 
+                padding: 1.5rem 1.2rem; 
+                border-radius: 2rem; 
+            }
+            
+            .brand h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .brand h1 i { 
+                font-size: 1.5rem; 
+                padding: 8px; 
+            }
+            
+            .input-wrapper { 
+                padding: 0 10px; 
+            }
+            
+            .input-wrapper input { 
+                padding: 12px 0; 
+                font-size: 0.9rem; 
+            }
+            
+            .phone-prefix { 
+                padding: 5px 10px; 
+                font-size: 0.8rem; 
+            }
+            
+            .login-btn { 
+                padding: 14px; 
+                font-size: 1rem; 
+            }
+            
+            .register-link { 
+                font-size: 0.8rem; 
+            }
+            
+            .loader { 
+                width: 35px; 
+                height: 35px; 
+            }
+            
+            .loader-text { 
+                font-size: 0.9rem; 
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            body { 
+                padding: 0.8rem; 
+                align-items: flex-start; 
+            }
+            
+            .card { 
+                padding: 1.2rem; 
+            }
+            
+            .brand { 
+                margin-bottom: 1rem; 
+            }
+            
+            .brand h1 { 
+                font-size: 1.5rem; 
+            }
+            
+            .brand h1 i { 
+                font-size: 1.2rem; 
+                padding: 5px; 
+            }
+            
+            .input-group { 
+                margin-bottom: 0.8rem; 
+            }
+            
+            .input-wrapper input { 
+                padding: 8px 0; 
+            }
+            
+            .login-btn { 
+                padding: 10px; 
+                margin-top: 10px; 
+            }
+            
+            .register-link { 
+                margin-top: 1rem; 
+            }
+        }
+
+        /* Foldable Devices / Tablets in Portrait */
+        @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+            .card { 
+                max-width: 90%; 
+            }
+            
+            .brand h1 { 
+                font-size: 2.5rem; 
+            }
+        }
+
+        /* High DPI / Retina Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body { 
+                -webkit-font-smoothing: antialiased; 
+                -moz-osx-font-smoothing: grayscale; 
+            }
+        }
+
+        /* Ensure touch targets are large enough on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .login-btn, 
+            .register-link a,
+            .phone-prefix {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .input-wrapper input {
+                min-height: 44px;
+            }
+        }
+
+        /* Safe area insets for modern devices */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(1.5rem, env(safe-area-inset-left));
+                padding-right: max(1.5rem, env(safe-area-inset-right));
+                padding-top: max(1.5rem, env(safe-area-inset-top));
+                padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body { 
+                background: white; 
+                padding: 0; 
+            }
+            
+            .card { 
+                box-shadow: none; 
+                border: 1px solid #ddd; 
+                max-width: 100%; 
+            }
+            
+            .login-btn, 
+            .register-link, 
+            .loader-container { 
+                display: none; 
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body { 
+                background: linear-gradient(145deg, #0a1525 0%, #1a3345 100%);
+            }
+        }
+
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .loader:before,
+            .login-btn {
+                animation: none;
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body>
