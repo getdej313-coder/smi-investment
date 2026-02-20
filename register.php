@@ -479,7 +479,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Generate random 6-digit OTP
         const otp = Math.floor(100000 + Math.random() * 900000);
         document.querySelector('input[name="otp"]').value = otp;
-        alert('🔐 Your OTP is: ' + otp + '\n\nIn production, this would be sent via SMS.');
+        alert('🔐 Your OTP is: ' + otp);
         
         // Visual feedback
         this.innerHTML = '<i class="fas fa-check"></i> Sent!';
@@ -565,4 +565,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
     </script>
 </body>
+
 </html>
