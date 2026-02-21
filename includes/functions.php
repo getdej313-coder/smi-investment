@@ -1,14 +1,14 @@
 <?php
-function isLoggedIn() {
-    return isset($_SESSION['user_id']);
-}
-
+// includes/functions.php
 function redirect($url) {
     header("Location: $url");
     exit;
 }
 
-function escape($data) {
-    return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+function sanitize($input) {
+    return htmlspecialchars(strip_tags(trim($input)));
 }
-?>
+
+function formatMoney($amount) {
+    return 'ETB ' . number_format($amount, 2);
+}
