@@ -16,7 +16,6 @@ function redirect($url) {
     }
     exit;
 }
-
 /**
  * Alternative redirect method using meta refresh (works everywhere)
  * @param string $url The URL to redirect to
@@ -26,7 +25,6 @@ function metaRedirect($url, $delay = 0) {
     echo '<meta http-equiv="refresh" content="' . $delay . ';url=' . $url . '">';
     exit;
 }
-
 /**
  * Sanitize user input
  * @param string $input The input to sanitize
@@ -38,7 +36,6 @@ function sanitize($input) {
     }
     return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
 }
-
 /**
  * Format money amount
  * @param float $amount The amount to format
@@ -47,7 +44,6 @@ function sanitize($input) {
 function formatMoney($amount) {
     return 'ETB ' . number_format((float)$amount, 2);
 }
-
 /**
  * Safe way to start a session if not already started
  */
@@ -56,7 +52,6 @@ function safeSessionStart() {
         session_start();
     }
 }
-
 /**
  * Generate a random string
  * @param int $length Length of the random string
@@ -65,7 +60,6 @@ function safeSessionStart() {
 function generateRandomString($length = 10) {
     return bin2hex(random_bytes($length / 2));
 }
-
 /**
  * Validate phone number (Ethiopian format)
  * @param string $phone Phone number to validate
@@ -78,7 +72,6 @@ function validatePhone($phone) {
     // Check if it's a valid Ethiopian phone number (9 digits starting with 9)
     return preg_match('/^9[0-9]{8}$/', $phone) === 1;
 }
-
 /**
  * Get client IP address
  * @return string IP address
@@ -101,7 +94,6 @@ function getClientIP() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
-
 /**
  * Log error message
  * @param string $message Error message to log
@@ -118,7 +110,6 @@ function isAjaxRequest() {
     return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
-
 /**
  * Return JSON response for AJAX requests
  * @param mixed $data Data to encode as JSON
@@ -131,4 +122,5 @@ function jsonResponse($data, $statusCode = 200) {
     exit;
 }
 ?>
+
 
