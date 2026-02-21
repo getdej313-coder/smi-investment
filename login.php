@@ -1,19 +1,10 @@
+
 <?php
-ini_set('session.save_path', '/tmp');
-session_start();
+// login.php
 require_once 'config/database.php';
 require_once 'includes/functions.php';
-
-// Redirect if already logged in
-if (isset($_SESSION['user_id'])) {
-    redirect('home.php');
-    exit();
-}
-
-$error = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $phone = $_POST['phone'] ?? '';
+    $phone = sanitize($_POST['phone'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if (!empty($phone) && !empty($password)) {
@@ -22,17 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
-            // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
-            
-            // Force session save before redirect
-            session_write_close();
-            
-            header("Location: home.php");
-            exit();
+            redirect('home.php');
         } else {
             $error = "Invalid phone or password";
         }
@@ -176,3 +161,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+
