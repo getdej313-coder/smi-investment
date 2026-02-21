@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 // Force session save path for Render
 ini_set('session.save_path', '/tmp');
 session_start();
@@ -505,5 +506,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+
 
 
