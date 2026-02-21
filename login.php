@@ -1,9 +1,5 @@
 <?php
 ini_set('session.save_path', '/tmp');
-ini_set('session.cookie_secure', 1);
-ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_samesite', 'Lax');
-ini_set('session.use_strict_mode', 1);
 session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
@@ -508,6 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+
 
 
 
