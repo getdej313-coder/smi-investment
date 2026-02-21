@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="card">
         <div class="brand">
-            <h1><i class="fas fa-chart-line"></i>user login</h1>
+            <h1><i class="fas fa-chart-line"></i>User Login</h1>
         </div> 
         <?php if (!empty($error)): ?>
             <div class="error"><i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
@@ -85,4 +85,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // End output buffering
 ob_end_flush();
 ?>
+
 
