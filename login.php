@@ -1,5 +1,7 @@
 <?php
 // login.php
+// Start output buffering at the VERY beginning
+ob_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 $error = '';
@@ -9,13 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($phone) && !empty($password)) {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE phone = ?");
         $stmt->execute([$phone]);
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(); 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
-            header("Location:home.php");
+            
+            // Clear the output buffer and redirect
+            ob_end_clean(); // This clears any output before the header
+            header("Location: home.php");
             exit;
         } else {
             $error = "Invalid phone or password";
@@ -81,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
-
-
-
-
+<?php
+// End output buffering
+ob_end_flush();
+?>
