@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -73,4 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        
     </div>
 </body>
+
 </html>
