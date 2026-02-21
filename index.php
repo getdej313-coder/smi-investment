@@ -1,8 +1,11 @@
 <?php
+// index.php
 require_once 'config/database.php';
+require_once 'includes/functions.php';
+
 if (isset($_SESSION['user_id'])) {
-    header("Location: home.php");
+    redirect('home.php');
 } else {
-    header("Location: login.php");
+    redirect('login.php');
 }
-exit;
+?>
