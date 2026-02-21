@@ -28,7 +28,7 @@ $team_members = [
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smi Investment - Mine</title>
+    <title>Smi Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -263,4 +263,5 @@ $team_members = [
         </div>       
     </div>
 </body>
+
 </html>
