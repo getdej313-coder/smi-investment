@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -736,4 +737,5 @@ if (!isset($_SESSION['daily_processed_today'])) {
         </div>
     </div>
 </body>
+
 </html>
