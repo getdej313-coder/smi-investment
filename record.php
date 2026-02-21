@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -125,4 +126,5 @@ $transactions = array_slice($transactions, $offset, $per_page);
         </div>
     </div>
 </body>
+
 </html>
