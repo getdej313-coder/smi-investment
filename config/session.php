@@ -1,28 +1,32 @@
 <?php
 // config/session.php
-// This file MUST be included at the VERY TOP of every page that needs a session.
+// ALL INI settings go HERE only
 
-// Set a consistent, writable path for session files.
-// Render's /tmp directory is writable.
+// Turn on error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Set session save path
 $sessionPath = '/tmp';
 if (!is_dir($sessionPath)) {
     mkdir($sessionPath, 0777, true);
 }
 session_save_path($sessionPath);
 
-// Set secure cookie parameters.
-// The domain should be your Render domain.
-$domain = '.onrender.com'; // The leading dot allows it to work for all subdomains
+// Configure session cookie
 session_set_cookie_params([
-    'lifetime' => 86400 * 30, // 30 days
+    'lifetime' => 86400 * 30,
     'path' => '/',
-    'domain' => $domain,
-    'secure' => true,     // Only send over HTTPS
-    'httponly' => true,   // Prevent JavaScript access
+    'domain' => '',
+    'secure' => false,
+    'httponly' => true,
     'samesite' => 'Lax'
 ]);
 
-// Start the session if it hasn't been started already.
+session_name('SMISESSION');
+
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
