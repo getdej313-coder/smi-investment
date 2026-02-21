@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -19,7 +20,7 @@ $total_invested = array_sum(array_column($investments, 'amount'));
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Products - Smi Investment</title>
+    <title>My product Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
@@ -157,4 +158,5 @@ $total_invested = array_sum(array_column($investments, 'amount'));
         </div>
     </div>
 </body>
+
 </html>
