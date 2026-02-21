@@ -1,4 +1,5 @@
 <?php
+require_once 'config/session.php';
 // Turn on error reporting for debugging (remove in production)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -45,3 +46,4 @@ try {
 // Make $pdo available globally
 global $pdo;
 ?>
+
