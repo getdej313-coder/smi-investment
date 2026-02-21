@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
-            // Use PHP header redirect directly
             header("Location:home.php");
             exit;
         } else {
@@ -82,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+
 
 
 
