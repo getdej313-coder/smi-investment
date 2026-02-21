@@ -1,4 +1,30 @@
 <?php
+// ERROR REPORTING - Remove after fixing
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// FORCE SESSION SETTINGS BEFORE ANY OUTPUT
+ini_set('session.save_handler', 'files');
+ini_set('session.save_path', '/tmp');
+ini_set('session.cookie_lifetime', 86400 * 30); // 30 days
+ini_set('session.gc_maxlifetime', 86400 * 30);
+ini_set('session.cookie_secure', false); // Set to false for local, true for production
+ini_set('session.cookie_httponly', true);
+ini_set('session.cookie_samesite', 'Lax');
+
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// CRITICAL: Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Debug - remove after fixing
+    echo "<!-- DEBUG: No user_id in session, redirecting to login -->";
+    header("Location: login.php");
+    exit();
+}
+
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -6,6 +32,13 @@ $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
+
+// If user not found, destroy session and redirect
+if (!$user) {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
 
 // Get user's investment statistics
 $stats = $pdo->prepare("SELECT 
@@ -17,7 +50,7 @@ $stats = $pdo->prepare("SELECT
 $stats->execute([$user_id]);
 $investment_stats = $stats->fetch();
 
-// Get team members count (placeholder - you can implement actual referral system later)
+// Get team members count (placeholder)
 $team_members = [
     'B' => 0,
     'C' => 0,
@@ -262,6 +295,8 @@ $team_members = [
             <a href="profile.php" class="nav-item active"><i class="fas fa-user"></i><span>Mine</span></a>
         </div>       
     </div>
+    <!-- DEBUG INFO - Remove after fixing -->
+    <!-- Session ID: <?= session_id() ?> -->
+    <!-- User ID: <?= $_SESSION['user_id'] ?? 'not set' ?> -->
 </body>
-
 </html>
