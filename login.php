@@ -17,11 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
-            
-            // Clear the output buffer and redirect
-            ob_end_clean(); // This clears any output before the header
-            header("Location: home.php");
-            exit;
         } else {
             $error = "Invalid phone or password";
         }
@@ -90,3 +85,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // End output buffering
 ob_end_flush();
 ?>
+
