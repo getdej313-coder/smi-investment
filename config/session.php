@@ -1,12 +1,5 @@
 <?php
 // config/session.php
-// ALL INI settings go HERE only
-
-// Turn on error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Set session save path
 $sessionPath = '/tmp';
 if (!is_dir($sessionPath)) {
@@ -26,7 +19,7 @@ session_set_cookie_params([
 
 session_name('SMISESSION');
 
-// Start session if not already started
+// Start session if not started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
