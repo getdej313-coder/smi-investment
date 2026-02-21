@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['balance'] = $user['balance'];
             // Use PHP header redirect directly
-            header("Location: home.php");
+            header("Location:home.php");
             exit;
         } else {
             $error = "Invalid phone or password";
@@ -82,4 +82,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+
 
