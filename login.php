@@ -1,22 +1,22 @@
-
 <?php
 // login.php
 require_once 'config/database.php';
 require_once 'includes/functions.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $phone = sanitize($_POST['phone'] ?? '');
-    $password = $_POST['password'] ?? '';
 
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $phone = isset($_POST['phone']) ? sanitize($_POST['phone']) : '';
+    $password = $_POST['password'] ?? '';
     if (!empty($phone) && !empty($password)) {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE phone = ?");
         $stmt->execute([$phone]);
         $user = $stmt->fetch();
-
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['phone'] = $user['phone'];
-            $_SESSION['balance'] = $user['balance'];
+            $_SESSION['balance'] = $user['balance']; 
+            // Use the safe redirect function
             redirect('home.php');
         } else {
             $error = "Invalid phone or password";
@@ -161,4 +161,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+
 
