@@ -1,22 +1,5 @@
 <?php
-// ERROR REPORTING - Remove after fixing
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Load session configuration FIRST
-require_once 'config/session.php';
-
-// Then load database and functions
-require_once 'config/database.php';
-require_once 'includes/functions.php';
-
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
+require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
 // Get user data
@@ -24,14 +7,7 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-// If user not found, logout
-if (!$user) {
-    session_destroy();
-    header("Location: login.php");
-    exit();
-}
-
-// Get investment earnings
+// Get investment earnings (total earned from investments)
 $investment_earnings = $pdo->prepare("SELECT COALESCE(SUM(amount), 0) as total FROM daily_earnings WHERE user_id = ? AND status = 'paid'");
 $investment_earnings->execute([$user_id]);
 $investment_total = $investment_earnings->fetch()['total'];
@@ -42,6 +18,8 @@ $referral_earnings->execute([$user_id]);
 $referral_total = $referral_earnings->fetch()['total'];
 
 $bonus_total = 0;
+
+// Calculate total earnings
 $total_earnings = $investment_total + $referral_total + $bonus_total;
 
 // Get today's earnings
@@ -62,7 +40,7 @@ $ref_stats = $pdo->prepare("SELECT
 $ref_stats->execute([$user_id]);
 $referral_stats = $ref_stats->fetch();
 
-// Get live withdrawals
+// Get live withdrawals - ONLY SUCCESSFUL ones
 $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals WHERE status = 'success' ORDER BY created_at DESC LIMIT 5")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -72,7 +50,6 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ALL YOUR EXISTING CSS - KEEP EXACTLY THE SAME */
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
         body { background:#0b1424; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; }
         .phone-frame { max-width:400px; width:100%; background:#101b2b; border-radius:36px; padding:24px 20px 80px; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.8); margin:0 auto; }
@@ -86,7 +63,6 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         .balance-card { background:#1e2a3a; border-radius:20px; padding:16px; border:1px solid #2d3a4b; box-shadow:0 4px 0 #0f172a; }
         .balance-label { color:#a5b4cb; font-size:0.75rem; margin-bottom:5px; }
         .balance-value { color:#fbbf24; font-size:1.3rem; font-weight:700; }
-        .balance-value small { color:#4ade80; font-size:0.8rem; margin-left:5px; }
         .total-earnings-card { background:linear-gradient(135deg,#1e4b5e,#12303e); border-radius:24px; padding:20px; margin-bottom:20px; border:1px solid #fbbf24; display:flex; justify-content:space-between; align-items:center; }
         .total-earnings-label { color:#a5b4cb; font-size:0.9rem; }
         .total-earnings-value { color:#fbbf24; font-size:2rem; font-weight:700; }
@@ -98,10 +74,8 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         .action-buttons { display:flex; gap:12px; margin-bottom:20px; }
         .recharge-btn { flex:1; background:linear-gradient(105deg,#1e4b5e,#12303e); border:none; border-radius:40px; padding:16px; color:white; text-align:center; text-decoration:none; font-weight:700; font-size:1.2rem; display:flex; align-items:center; justify-content:center; gap:10px; border:1px solid #fbbf24; box-shadow:0 6px 0 #0f172a; transition:0.2s; }
         .recharge-btn:hover { transform:translateY(-2px); background:linear-gradient(105deg,#1b5f72,#164c5e); }
-        .recharge-btn i { color:#fbbf24; }
         .withdraw-btn { flex:1; background:#1e2a3a; border:none; border-radius:40px; padding:16px; color:white; text-align:center; text-decoration:none; font-weight:600; font-size:1.2rem; display:flex; align-items:center; justify-content:center; gap:10px; border:1px solid #2d3a4b; box-shadow:0 6px 0 #0f172a; transition:0.2s; }
         .withdraw-btn:hover { transform:translateY(-2px); background:#273649; }
-        .withdraw-btn i { color:#fbbf24; }
         .action-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
         .action-item { background:#1e2a3a; border-radius:20px; padding:14px 4px; text-align:center; color:white; border:1px solid #2d3a4b; box-shadow:0 6px 0 #0f172a; text-decoration:none; display:block; transition:0.2s; }
         .action-item:hover { transform:translateY(-2px); background:#273649; }
@@ -111,7 +85,6 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         .shortcut-item { text-align:center; color:#b9c7da; font-size:0.75rem; text-decoration:none; display:block; }
         .shortcut-item i { font-size:1.3rem; background:#1e2a3a; padding:12px; border-radius:30px; color:#fbbf24; margin-bottom:6px; display:inline-block; width:48px; height:48px; line-height:24px; border:1px solid #334155; transition:0.2s; }
         .shortcut-item:hover i { background:#273649; transform:scale(1.05); }
-        .shortcut-item span { display:block; }
         .recent-card { background:#1e2a3a; border-radius:26px; padding:18px; margin-bottom:28px; border:1px solid #2d3a4b; box-shadow:0 8px 0 #0f172a; cursor:pointer; text-decoration:none; display:block; transition:0.2s; }
         .recent-card:hover { transform:translateY(-2px); background:#273649; }
         .recent-title { color:#a5b4cb; font-size:0.8rem; margin-bottom:12px; }
@@ -136,82 +109,6 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         .nav-item.active { color:#fbbf24; }
         .nav-item:hover { color:#fbbf24; transform:translateY(-2px); }
         .view-all { color:#fbbf24; text-decoration:none; font-size:0.9rem; }
-
-        /* Keep all your responsive CSS exactly as is */
-        @media screen and (min-width: 600px) and (max-width: 1024px) {
-            body { padding:30px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
-            .phone-frame { max-width: 700px; border-radius: 40px; padding: 30px 30px 90px; }
-            .balance-grid { grid-template-columns: repeat(4, 1fr); }
-            .action-grid, .shortcut-grid { gap: 16px; }
-            .action-item { padding: 18px 8px; }
-            .action-item i { font-size: 2rem; }
-            .action-item span { font-size: 0.9rem; }
-            .withdrawal-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .bottom-nav { padding: 15px 30px 25px; }
-            .nav-item span { font-size: 0.8rem; }
-            .nav-item i { font-size: 1.6rem; }
-        }
-
-        @media screen and (min-width: 1025px) and (max-width: 1440px) {
-            body { padding: 40px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
-            .phone-frame { max-width: 900px; border-radius: 50px; padding: 40px 40px 100px; }
-            .balance-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
-            .action-grid { grid-template-columns: repeat(6, 1fr); gap: 18px; }
-            .shortcut-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
-            .withdrawal-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-            .action-buttons { max-width: 600px; margin-left: auto; margin-right: auto; }
-            .recent-card { max-width: 600px; margin-left: auto; margin-right: auto; }
-            .bottom-nav { padding: 15px 40px 25px; max-width: 900px; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; }
-        }
-
-        @media screen and (min-width: 1441px) {
-            body { padding: 50px; background: linear-gradient(145deg, #0b1a2e 0%, #1c3a4f 100%); }
-            .phone-frame { max-width: 1200px; border-radius: 60px; padding: 50px 50px 120px; }
-            .balance-grid { grid-template-columns: repeat(6, 1fr); gap: 20px; }
-            .action-grid { grid-template-columns: repeat(8, 1fr); gap: 20px; }
-            .shortcut-grid { grid-template-columns: repeat(8, 1fr); gap: 18px; }
-            .withdrawal-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
-            .action-item, .shortcut-item { font-size: 1rem; }
-            .action-item i { font-size: 2.2rem; }
-            .shortcut-item i { width: 70px; height: 70px; font-size: 2rem; line-height: 46px; }
-            .recent-card, .action-buttons { max-width: 800px; margin-left: auto; margin-right: auto; }
-            .bottom-nav { max-width: 1200px; padding: 20px 50px 30px; left: 50%; transform: translateX(-50%); }
-            .nav-item span { font-size: 0.9rem; }
-            .nav-item i { font-size: 1.8rem; }
-        }
-
-        @media screen and (max-width: 399px) {
-            .phone-frame { padding: 20px 15px 80px; }
-            .balance-grid { grid-template-columns: 1fr; }
-            .action-grid, .shortcut-grid { gap: 8px; }
-            .action-item { padding: 10px 2px; }
-            .action-item i { font-size: 1.3rem; }
-            .action-item span { font-size: 0.7rem; }
-            .withdrawal-item { flex-direction: column; gap: 10px; text-align: center; }
-            .withdrawal-left { flex-direction: column; }
-            .bottom-nav { padding: 10px 10px 15px; }
-            .nav-item i { font-size: 1.2rem; }
-            .nav-item span { font-size: 0.6rem; }
-        }
-
-        @media screen and (orientation: landscape) and (max-height: 600px) {
-            body { padding: 20px; }
-            .phone-frame { max-width: 700px; padding: 20px 20px 70px; }
-            .welcome-row { margin-bottom: 15px; }
-            .action-grid, .shortcut-grid { margin-bottom: 15px; }
-            .recent-card { margin-bottom: 15px; }
-            .bottom-nav { padding: 8px 20px 15px; }
-        }
-
-        @media screen and (min-height: 1000px) {
-            body { align-items: flex-start; padding-top: 50px; padding-bottom: 50px; }
-        }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .phone-frame { box-shadow: none; background: white; color: black; max-width: 100%; }
-            .bottom-nav, .action-buttons, .action-grid, .shortcut-grid { display: none; }
-        }
     </style>
 </head>
 <body>
@@ -231,7 +128,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             <div>
                 <div class="total-earnings-label">Total Lifetime Earnings</div>
                 <div class="total-earnings-value">ETB <?= number_format($total_earnings, 2) ?></div>
-                <div class="total-earnings-sub">₱ <?= number_format($today_total, 2) ?> earned today</div>
+                <div class="total-earnings-sub">ETB <?= number_format($today_total, 2) ?> earned today</div>
             </div>
             <i class="fas fa-chart-line" style="color:#fbbf24; font-size:2rem;"></i>
         </div>
@@ -239,7 +136,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
         <!-- Balance Grid -->
         <div class="balance-grid">
             <div class="balance-card">
-                <div class="balance-label">Today's Product Income</div>
+                <div class="balance-label">Today's Income</div>
                 <div class="balance-value">ETB <?= number_format($today_total, 2) ?></div>
             </div>
             <div class="balance-card">
@@ -282,7 +179,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             </a>
         </div>
 
-        <!-- Action grid for Bonus and Incentive -->
+        <!-- Action grid -->
         <div class="action-grid">
             <a href="bonus.php" class="action-item">
                 <i class="fas fa-gift"></i>
@@ -322,7 +219,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             </a>
         </div>
 
-        <!-- Recent recharge (clickable to transaction details) -->
+        <!-- Recent recharge -->
         <a href="transaction_details.php?id=recent" class="recent-card">
             <div class="recent-title">
                 <i class="fas fa-clock"></i> RECENT ACTIVITY
@@ -344,7 +241,7 @@ $withdrawals = $pdo->query("SELECT phone_masked, amount, status FROM withdrawals
             </div>
         </a>
 
-        <!-- Live Withdrawals section with "View All" link -->
+        <!-- Live Withdrawals section -->
         <div class="section-header">
             <h3><i class="fas fa-stream"></i> Live Withdrawals</h3>
             <a href="withdrawals_history.php" class="view-all">
