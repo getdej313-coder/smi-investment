@@ -1,7 +1,6 @@
 <?php
 // includes/functions.php
 // Make sure NO whitespace before <?php
-
 /**
  * Safe redirect function that checks if headers are already sent
  * @param string $url The URL to redirect to
@@ -132,3 +131,4 @@ function jsonResponse($data, $statusCode = 200) {
     exit;
 }
 ?>
+
