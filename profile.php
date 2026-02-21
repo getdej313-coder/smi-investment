@@ -1,32 +1,22 @@
 <?php
-// ERROR REPORTING - Remove after fixing
-require_once 'config/session.php';
-error_reporting(E_ALL);
+// ERROR REPORTING - Place at the very top
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// FORCE SESSION SETTINGS BEFORE ANY OUTPUT
-ini_set('session.save_handler', 'files');
-ini_set('session.save_path', '/tmp');
-ini_set('session.cookie_lifetime', 86400 * 30); // 30 days
-ini_set('session.gc_maxlifetime', 86400 * 30);
-ini_set('session.cookie_secure', false); // Set to false for local, true for production
-ini_set('session.cookie_httponly', true);
-ini_set('session.cookie_samesite', 'Lax');
-
-// Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// ONLY include session config - it handles ALL session settings
+require_once 'config/session.php';
 
 // CRITICAL: Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // Debug - remove after fixing
-    echo "<!-- DEBUG: No user_id in session, redirecting to login -->";
     header("Location: login.php");
     exit();
 }
 
+require_once 'config/database.php';
+require_once 'includes/functions.php';
 require_once 'includes/auth.php';
+
 $user_id = $_SESSION['user_id'];
 
 // Get user data
@@ -66,6 +56,7 @@ $team_members = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ALL YOUR EXISTING CSS - KEEP EXACTLY THE SAME */
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
         body { background:#0b1424; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:16px; }
         .phone-frame { max-width:400px; width:100%; background:#101b2b; border-radius:36px; padding:24px 20px 80px; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.8); }
@@ -232,62 +223,20 @@ $team_members = [
 
         <!-- Options List -->
         <ul class="options-list">
-            <li>
-                <a href="withdraw_info.php">
-                    <span class="option-checkbox"><i class="fas fa-square"></i></span>
-                    <i class="fas fa-info-circle"></i> Withdraw Information
-                </a>
-            </li>
-            <li>
-                <a href="partner_agreement.php">
-                    <span class="option-checkbox checked"><i class="fas fa-check-square"></i></span>
-                    <i class="fas fa-file-signature"></i> Partner Agreement
-                </a>
-            </li>
-            <li>
-                <a href="my_income.php">
-                    <span class="option-checkbox checked"><i class="fas fa-check-square"></i></span>
-                    <i class="fas fa-box-open"></i> MY Product Income
-                </a>
-            </li>
-            <li>
-                <a href="my_products.php">
-                    <span class="option-checkbox checked"><i class="fas fa-check-square"></i></span>
-                    <i class="fas fa-cubes"></i> My Product
-                </a>
-            </li>
-            <li>
-                <a href="record.php">
-                    <span class="option-checkbox"><i class="fas fa-square"></i></span>
-                    <i class="fas fa-history"></i> Record
-                </a>
-            </li>
-            <li>
-                <a href="about_us.php">
-                    <span class="option-checkbox"><i class="fas fa-square"></i></span>
-                    <i class="fas fa-building"></i> About US
-                </a>
-            </li>
-            <li>
-                <a href="reset_password.php">
-                    <span class="option-checkbox checked"><i class="fas fa-check-square"></i></span>
-                    <i class="fas fa-key"></i> Reset Password
-                </a>
-            </li>
-            <li>
-                <a href="telegram_service.php">
-                    <span class="option-checkbox checked"><i class="fas fa-check-square"></i></span>
-                    <i class="fab fa-telegram-plane"></i> Telegram Service
-                </a>
-            </li>
+            <li><a href="withdraw_info.php"><span class="option-checkbox"></span><i class="fas fa-info-circle"></i> Withdraw Information</a></li>
+            <li><a href="partner_agreement.php"><span class="option-checkbox checked"><i class="fas fa-check"></i></span><i class="fas fa-file-signature"></i> Partner Agreement</a></li>
+            <li><a href="my_income.php"><span class="option-checkbox checked"><i class="fas fa-check"></i></span><i class="fas fa-box-open"></i> MY Product Income</a></li>
+            <li><a href="my_products.php"><span class="option-checkbox checked"><i class="fas fa-check"></i></span><i class="fas fa-cubes"></i> My Product</a></li>
+            <li><a href="record.php"><span class="option-checkbox"></span><i class="fas fa-history"></i> Record</a></li>
+            <li><a href="about_us.php"><span class="option-checkbox"></span><i class="fas fa-building"></i> About US</a></li>
+            <li><a href="reset_password.php"><span class="option-checkbox checked"><i class="fas fa-check"></i></span><i class="fas fa-key"></i> Reset Password</a></li>
+            <li><a href="telegram_service.php"><span class="option-checkbox checked"><i class="fas fa-check"></i></span><i class="fab fa-telegram-plane"></i> Telegram Service</a></li>
         </ul>
 
         <!-- Logout Button -->
-        <a href="logout.php" class="logout-btn">
-            <i class="fas fa-sign-out-alt"></i> Log out
-        </a>
+        <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log out</a>
 
-        <!-- Bottom Navigation (Mine Active) -->
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="home.php" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="product.php" class="nav-item"><i class="fas fa-cube"></i><span>Product</span></a>
@@ -296,9 +245,8 @@ $team_members = [
             <a href="profile.php" class="nav-item active"><i class="fas fa-user"></i><span>Mine</span></a>
         </div>       
     </div>
-    <!-- DEBUG INFO - Remove after fixing -->
+    <!-- DEBUG INFO -->
     <!-- Session ID: <?= session_id() ?> -->
     <!-- User ID: <?= $_SESSION['user_id'] ?? 'not set' ?> -->
 </body>
 </html>
-
