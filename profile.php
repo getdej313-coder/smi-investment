@@ -1,5 +1,6 @@
 <?php
 // ERROR REPORTING - Remove after fixing
+require_once 'config/session.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -300,3 +301,4 @@ $team_members = [
     <!-- User ID: <?= $_SESSION['user_id'] ?? 'not set' ?> -->
 </body>
 </html>
+
