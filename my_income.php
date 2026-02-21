@@ -1,5 +1,5 @@
 <?php
-require_once 'config/session.php';
+
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -177,3 +177,4 @@ $monthly_data = $monthly->fetchAll();
 </body>
 
 </html>
+
