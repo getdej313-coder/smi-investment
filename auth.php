@@ -1,10 +1,13 @@
 <?php
-// Always start session safely
+ini_set('session.save_path', '/tmp');
+ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_samesite', 'Lax');
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// If no user_id, redirect to login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
