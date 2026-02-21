@@ -1,5 +1,4 @@
 <?php
-require_once 'config/session.php';
 require_once 'includes/auth.php';
 $user_id = $_SESSION['user_id'];
 
@@ -160,3 +159,4 @@ $total_invested = array_sum(array_column($investments, 'amount'));
 </body>
 
 </html>
+
