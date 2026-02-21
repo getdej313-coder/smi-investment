@@ -1,4 +1,6 @@
-<?php require_once 'includes/auth.php'; ?>
+<?
+require_once 'config/session.php';
+php require_once 'includes/auth.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -393,4 +395,5 @@
         </div>
     </div>
 </body>
+
 </html>
